@@ -11,7 +11,8 @@
       "error",
       {
         "singleQuote": true,
-        "jsxSingleQuote": true
+        "jsxSingleQuote": true,
+        "endOfLine": "auto"
       }
     ]
   }

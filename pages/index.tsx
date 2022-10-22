@@ -2,11 +2,19 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import { testStore } from 'store';
 import { observer } from 'mobx-react';
+import { useEffect } from 'react';
 
 const Home: NextPage = () => {
-  const { counter, increment, decrement, inputStr, editStr } = testStore;
-  const a = { a: 1, b: 2 };
-  console.log(counter, inputStr);
+  const {
+    counter,
+    increment,
+    decrement,
+    inputStr,
+    editStr,
+    infoTitle,
+    loadInfo,
+    loadInfoErro,
+  } = testStore;
   return (
     <div>
       <Head>
@@ -23,6 +31,14 @@ const Home: NextPage = () => {
         value={inputStr}
         onChange={(e) => editStr((e.target as HTMLInputElement)?.value)}
       />
+      <button onClick={loadInfo}>async load</button>
+      <button onClick={loadInfoErro}>async load</button>
+      {infoTitle && <div>{infoTitle}</div>}
+      {/* {info.map((el) => (
+        <div key={el.id}>
+          {el.title}/{el.hunting}
+        </div>
+      ))} */}
     </div>
   );
 };

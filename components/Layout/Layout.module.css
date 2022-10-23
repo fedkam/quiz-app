@@ -1,0 +1,21 @@
+.header {
+    position: relative;
+    z-index: 10;
+
+    background-color: var(--background-color);
+    box-shadow: 0 2px 8px #F0F1F2;
+}
+
+.content {
+    /* min-height: calc(100vh - var(--size-header) - var(--size-footer)); */
+    min-height: 100vh;
+    padding: 0 56px;
+
+    background-color: var(--background-color);
+}
+
+.footer {
+    text-align: center;
+
+    background-color: var(--background-color);
+}

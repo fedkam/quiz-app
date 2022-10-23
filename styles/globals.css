@@ -3,6 +3,8 @@ body {
     margin: 0;
     padding: 0;
 
+    background-color: var(--background-color);
+
     font-family:
         -apple-system,
         BlinkMacSystemFont,
@@ -38,10 +40,9 @@ a {
     }
 }
 
-.test1 {
-    background-color: red;
-}
-
-.test2 {
-    background-color: green;
+:root {
+    --size-header: 64px;
+    --size-footer: 48px;
+    --background-color: white;
+    font-family: "Noto Sans", sans-serif;
 }

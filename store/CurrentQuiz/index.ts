@@ -1,2 +1,2 @@
 export * from './CurrentQuiz.store';
-export type { Category } from './CurrentQuiz.types';
+export type { Category, Question } from './CurrentQuiz.types';

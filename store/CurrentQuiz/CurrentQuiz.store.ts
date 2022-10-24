@@ -6,7 +6,7 @@ import { Category, Question } from './CurrentQuiz.types';
 class CurrentQuiz {
   userName: string = '';
   category: Category | null = null;
-  currentQuestion: number = 0;
+  currentQuestionNumber: number = 0;
   questions: Question[] | null = null;
   mistakeIds: number[] = [];
   ratingUsers: Man[] = [];
@@ -23,8 +23,8 @@ class CurrentQuiz {
     this.category = category;
   };
 
-  setCurrentQuestion = (number: number) => {
-    this.currentQuestion = number;
+  setCurrentQuestionNumber = (number: number) => {
+    this.currentQuestionNumber = number;
   };
 
   setQuestions = (questions: Question[] | null) => {
@@ -35,12 +35,12 @@ class CurrentQuiz {
     this.mistakeIds.push(id);
   };
 
-  setRatingUsers(ratingUsers: Man[]) {
+  setRatingUsers = (ratingUsers: Man[]) => {
     this.ratingUsers = ratingUsers;
-  }
+  };
 
   nextQuestion = () => {
-    this.setCurrentQuestion(this.currentQuestion++);
+    this.setCurrentQuestionNumber(this.currentQuestionNumber++);
   };
 }
 

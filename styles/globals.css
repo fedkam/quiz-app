@@ -46,3 +46,14 @@ a {
     --background-color: white;
     font-family: "Noto Sans", sans-serif;
 }
+
+.wrapper-content {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+
+    height: 100vh;
+}

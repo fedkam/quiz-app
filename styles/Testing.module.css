@@ -1,0 +1,39 @@
+.card-content {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+
+    gap: 40px;
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+
+    width: 312px;
+    height: 100%;
+}
+
+.list-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    padding: 8px 24px;
+
+    cursor: pointer;
+
+    text-transform: capitalize;
+}
+
+.list-item:first-child {
+    border-radius: 16px 16px 0 0;
+}
+
+.list-item:last-child {
+    border-radius: 0 0 16px 16px;
+}

@@ -52,7 +52,7 @@ const TestingStep: FC = () => {
   return (
     <>
       <Title style={{ margin: 0 }}>
-        {questions ? questions[currentQuestionNumber].question : 'cv'}
+        {questions.length > 0 ? questions[currentQuestionNumber].question : ''}
       </Title>
     </>
   );
@@ -77,7 +77,7 @@ const Testing: NextPage = () => {
   return (
     <Layout>
       <div className='wrapper-content'>
-        <CardPage>
+        <CardPage loading={categories.length === 0}>
           <div className={styles['card-content']}>
             {!currentQuiz.category && (
               <ChooseCategoryStep categories={categories} />

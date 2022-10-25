@@ -7,7 +7,7 @@ class CurrentQuiz {
   userName: string = '';
   category: Category | null = null;
   currentQuestionNumber: number = 0;
-  questions: Question[] | null = null;
+  questions: Question[] = [];
   mistakeIds: number[] = [];
   ratingUsers: Man[] = [];
 
@@ -27,7 +27,7 @@ class CurrentQuiz {
     this.currentQuestionNumber = number;
   };
 
-  setQuestions = (questions: Question[] | null) => {
+  setQuestions = (questions: Question[]) => {
     this.questions = questions;
   };
 

@@ -5,6 +5,8 @@ import { Category, Question } from './CurrentQuiz.types';
 
 class CurrentQuiz {
   userName: string = '';
+  category: Category | null = null;
+  categories: Category[] = [];
   currentQuestionNumber: number = 0;
   questions: Question[] = [];
   mistakeIds: number[] = [];
@@ -21,6 +23,14 @@ class CurrentQuiz {
 
   setLoading = (value: boolean) => {
     this.loading = value;
+  };
+
+  setCategory = (category: Category | null) => {
+    this.category = category;
+  };
+
+  setCategories = (categories: Category[]) => {
+    this.categories = categories;
   };
 
   setCurrentQuestionNumber = (number: number) => {
@@ -42,6 +52,22 @@ class CurrentQuiz {
   nextQuestion = () => {
     this.setCurrentQuestionNumber(this.currentQuestionNumber++);
   };
+
+  async loadCategories() {
+    this.loading = true;
+    try {
+      let result = await getCategories({ count: 10 });
+      runInAction(() => {
+        this.categories = result;
+        this.loading = false;
+      });
+    } catch (error) {
+      runInAction(() => {
+        this.loading = false;
+      });
+      console.log('errors in loadCategories()');
+    }
+  }
 }
 
 export const currentQuiz = new CurrentQuiz();

@@ -3,88 +3,69 @@ import { observer } from 'mobx-react';
 import { Layout } from 'components/Layout';
 import { Card, Typography } from 'antd';
 import { FC, useEffect, useState } from 'react';
-import { getCategoty, getQuestions } from 'services';
-import { Category, currentQuiz } from 'store/CurrentQuiz';
+import { getCategories, getQuestions } from 'services';
+import { currentQuiz } from 'store/CurrentQuiz';
+import { chooseCategory } from 'store/ChooseCategory';
 import { CardPage } from 'ui-kit/CardPage';
 import styles from 'styles/Testing.module.css';
+import { testing } from 'store/Testing';
 
 const { Title } = Typography;
 
-const ChooseCategoryStep: FC<{ categories: Category[] }> = ({ categories }) => {
+const ChooseCategoryStep = observer(() => {
+  useEffect(() => {
+    chooseCategory.categories.length === 0 && chooseCategory.loadCategories();
+  }, []);
+
   return (
-    <>
-      <Title style={{ margin: 0 }}>Choose a category</Title>
-      <div className={styles['list']}>
-        {categories.length !== 0 &&
-          categories.map((el) => (
+    <CardPage loading={chooseCategory.categories.length === 0}>
+      <div className={styles['card-content']}>
+        <Title style={{ margin: 0 }}>📑 Choose a category</Title>
+        <div className={styles['list']}>
+          {chooseCategory.categories.map((el) => (
             <Card.Grid
               key={`${el.id}`}
               className={styles['list-item']}
-              onClick={() => currentQuiz.setCategory(el)}
+              onClick={() => chooseCategory.setCategory(el)}
             >
               {el.title}
             </Card.Grid>
           ))}
+        </div>
       </div>
-    </>
+    </CardPage>
   );
-};
+});
 
-const TestingStep: FC = () => {
-  const {
-    category,
-    currentQuestionNumber,
-    nextQuestion,
-    questions,
-    setQuestions,
-  } = currentQuiz;
+const TestingStep = observer(() => {
+  const { currentQuestionNumber, nextQuestion, questions, loadQuestions } =
+    testing;
+  const { category } = chooseCategory;
 
   useEffect(() => {
-    loadQuestions();
+    console.log('useEffect', category?.id, questions.length === 0);
+    category?.id && questions.length === 0 && loadQuestions(category?.id);
   }, []);
 
-  async function loadQuestions() {
-    let result = await getQuestions({ id: category?.id });
-    console.log(result);
-    setQuestions(result);
-  }
-
   return (
-    <>
-      <Title style={{ margin: 0 }}>
-        {questions.length > 0 ? questions[currentQuestionNumber].question : ''}
-      </Title>
-    </>
+    <CardPage loading={questions.length === 0}>
+      <div className={styles['card-content']}>
+        <Title style={{ margin: 0 }}>
+          {questions.length > 0
+            ? questions[currentQuestionNumber].question
+            : ''}
+        </Title>
+      </div>
+    </CardPage>
   );
-};
+});
 
 const Testing: NextPage = () => {
-  const [categories, setCategories] = useState<Category[]>([]);
-
-  useEffect(() => {
-    categories.length === 0 && loadCategories();
-  });
-
-  async function loadCategories() {
-    try {
-      let result = await getCategoty({ count: 10 });
-      setCategories(result);
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
   return (
     <Layout>
       <div className='wrapper-content'>
-        <CardPage loading={categories.length === 0}>
-          <div className={styles['card-content']}>
-            {!currentQuiz.category && (
-              <ChooseCategoryStep categories={categories} />
-            )}
-            {currentQuiz.category && <TestingStep />}
-          </div>
-        </CardPage>
+        {!chooseCategory.category && <ChooseCategoryStep />}
+        {chooseCategory.category && <TestingStep />}
       </div>
     </Layout>
   );
